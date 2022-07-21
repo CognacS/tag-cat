@@ -12,5 +12,5 @@ setup(
 		'pandas>=1.3.0',
 		'torch>=1.11.0'
     ],
-	packages=find_packages(include=['tagcat.*', 'tasks.*'])
+	packages=find_packages(include=['tagcat', 'tasks', 'tagcat.*', 'tasks.*'])
 )
