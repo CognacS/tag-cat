@@ -9,7 +9,7 @@ setup(
 	url='https://github.com/CognacS/tag-cat',
 	install_requires=[
         'numpy>=1.21.3',
-		'pandas>=1.4.2',
+		'pandas>=1.3.0',
 		'torch>=1.11.0'
     ],
 	packages=find_packages(include=['tagcat.*', 'tasks.*'])
