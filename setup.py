@@ -7,5 +7,10 @@ setup(
 	author='Samuel Cognolato',
 	author_email='samuel.cognolato@studenti.unipd.it',
 	url='https://github.com/CognacS/tag-cat',
-	packages=find_packages(include=['tagcat.*', 'tasks.*']),
+	install_requires=[
+        'numpy==1.22.3',
+		'pandas==1.4.2',
+		'torch==1.11.0'
+    ],
+	packages=find_packages(include=['tagcat.*', 'tasks.*'])
 )
