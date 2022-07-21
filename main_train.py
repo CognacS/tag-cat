@@ -47,7 +47,13 @@ def main():
 	if args.d is not None:
 		dataset_profiles = profile_reader(args.d[0])['datasets']
 
-	output_path = args.o[0]
+	if args.o is not None:
+		output_path = args.o[0]
+	else:
+		output_path = None
+
+	if output_path is None:
+		output_path = '.'
 
 	batch_train(
 		models_args, dataset_profiles, output_path=output_path,

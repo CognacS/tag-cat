@@ -1,0 +1,29 @@
+{
+	"models": [
+		{
+			"path": "profiles/models/args_base_fixed.json",
+			"runs": 2,
+			"seed_start": 5
+		},
+		{
+			"path": "profiles/models/args_base_nogroups.json",
+			"runs": 2,
+			"seed_start": 5
+		},
+		{
+			"path": "profiles/models/args_base_orig.json",
+			"runs": 2,
+			"seed_start": 5
+		},
+		{
+			"path": "profiles/models/args_base_vanillaponder.json",
+			"runs": 2,
+			"seed_start": 5
+		},
+		{
+			"path": "profiles/models/args_base.json",
+			"runs": 2,
+			"seed_start": 5
+		}
+	]
+}
