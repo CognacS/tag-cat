@@ -7,7 +7,7 @@ generic_sequence = collections.abc.Sequence
 ################################################################################################################
 
 # symbol -> index
-def vocab_alphabet2index(alphabet:list):
+def vocab_alphabet2index(alphabet):
     """ Returns a dictionary (vocabulary) mapping each alphabet symbol to an index starting from 0 to len(alphabet). The ordering is the same as in alphabet.
 
     Parameters
@@ -23,7 +23,7 @@ def vocab_alphabet2index(alphabet:list):
     return {t:i for i, t in enumerate(alphabet)}
 
 # index -> symbol
-def vocab_index2alphabet(alphabet:list):
+def vocab_index2alphabet(alphabet):
     """ Returns a dictionary mapping each index starting from 0 to len(alphabet) to an alphabet symbol. The ordering is the same as in alphabet.
 
     Parameters
@@ -39,7 +39,7 @@ def vocab_index2alphabet(alphabet:list):
     return {i:t for i, t in enumerate(alphabet)}
 
 # reverse -> ===> <-
-def vocab_reverse_map(vocab:dict):
+def vocab_reverse_map(vocab):
     """ Returns the reverse map of a vocabulary.
 
     Parameters
@@ -56,7 +56,7 @@ def vocab_reverse_map(vocab:dict):
 
 
 # sequence of [any] -(tokenizer_function)-> sequence of [tokens] -(vocab_alpha2index)-> sequence of [indices]
-def index_tokenize(sequence:generic_sequence, vocab_alpha2index:dict, tokenizer_function, **tokenizer_arguments):
+def index_tokenize(sequence, vocab_alpha2index, tokenizer_function, **tokenizer_arguments):
     """ Break down the sequence with a tokenizer function and replace each symbol with the corresponding entry of the vocabulary
 
     Parameters
@@ -79,7 +79,7 @@ def index_tokenize(sequence:generic_sequence, vocab_alpha2index:dict, tokenizer_
 
 
 # sequence of [indices] -(vocab_index2alphavocab_alpha2index)-> sequence of [tokens] -(detokenizer_function)-> sequence of [any]
-def index_detokenize(indices:list[int], vocab_index2alpha:dict, detokenizer_function, **detokenizer_arguments):
+def index_detokenize(indices, vocab_index2alpha, detokenizer_function, **detokenizer_arguments):
     """ Rebuild the original sequence by replacing each index with the corresponding symbol of the vocabulary, and reconstruct with a detokenizer function
 
     Parameters
@@ -108,7 +108,7 @@ def index_detokenize(indices:list[int], vocab_index2alpha:dict, detokenizer_func
 class TokenizationException(Exception):
     pass
 
-def extract_special_symbols(sequence:str):
+def extract_special_symbols(sequence):
     """ Break down a sequence of characters into ordinary strings and special symbols, i.e. strings enclosed in brackes.
     E.g.
     Input: "Hi, my name is <PLACEHOLDER>, nice to meet you."
@@ -159,7 +159,7 @@ def extract_special_symbols(sequence:str):
             is_special.append(False)
     return final_parts, is_special
 
-def tokenizer_str2chars(sequence:str):
+def tokenizer_str2chars(sequence):
     """ Simple tokenizer breaking a string into raw characters
 
     Parameters
@@ -174,7 +174,7 @@ def tokenizer_str2chars(sequence:str):
     """
     return list(sequence)
 
-def tokenizer_rich_str2chars(sequence:str):
+def tokenizer_rich_str2chars(sequence):
     """ Rich tokenizer, breaking a string into raw characters and special symbols, enclosed inside brackets <>.
     E.g.
     Input: "Hi, my name is <PLACEHOLDER>"
@@ -211,7 +211,7 @@ class DetokenizationException(Exception):
 def is_special_symbol(symbol):
     return symbol[0] == '<' and symbol[-1] == '>' and all([s not in symbol[1:-1] for s in ['<','>']])
 
-def detokenizer_chars2str(tokens:list[str]):
+def detokenizer_chars2str(tokens):
     """ Simple detokenizer joining raw characters into a string
 
     Parameters
@@ -226,7 +226,7 @@ def detokenizer_chars2str(tokens:list[str]):
     """
     return ''.join(tokens)
 
-def detokenizer_rich_chars2str(tokens:list[str], specialsymb_behavior='remove'):
+def detokenizer_rich_chars2str(tokens, specialsymb_behavior='remove'):
     """ Rich detokenizer joining raw characters into a string, and defining behaviors for special symbols
 
     Parameters
