@@ -1,0 +1,27 @@
+{
+	"datasets":
+	{
+		"train_dataset":
+		{
+			"operands_num": [1,4],
+			"operands_size": [1,10],
+			"num_groups": 2,
+			"size_groups": 1,
+			"batches_size": 128,
+			"batches_num": 10,
+			"result_pad_symb": "<PAD>",
+			"numeric_base": 10
+		},
+		"validation_dataset":
+		{
+			"operands_num": [5,6],
+			"operands_size": [11,15],
+			"num_groups": 1,
+			"size_groups": 1,
+			"batches_size": 128,
+			"batches_num": 1,
+			"result_pad_symb": "<PAD>",
+			"numeric_base": 10
+		}
+	}
+}

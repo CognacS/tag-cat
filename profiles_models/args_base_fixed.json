@@ -1,0 +1,72 @@
+{
+	"model":
+	{
+		"model_name": "base_fixed",
+		"general":
+		{
+			"embedding_size": 64,
+			"dropout": 0.1
+		},
+		"architecture_components":
+		{
+			"use_pondernet": false
+		},
+		"module_components":
+		{
+			"highway_gates": false,
+			"reset_gates": false,
+			"norm_pos": "post"
+		},
+		"s2g":
+		{
+			"num_units_s2g": 64
+		},
+		"attn_conv":
+		{
+			"kernel_size": 3,
+			"groups": 8,
+			"heads": 64,
+			"num_units_step": 256
+		}
+	},
+
+	"training":
+	{
+		"general":
+		{
+			"optimizer": "adamw",
+			"scheduler": "cosine",
+			"epochs": 30,
+			"checkpoint_period": 30,
+			"grad_clipping": 10.0,
+			"random_seed": 0
+		},
+		"grid_size":
+		{
+			"min_grid_rows_add": 0,
+			"min_grid_cols_add": 2,
+			"range_grid_rows_add": 3,
+			"range_grid_cols_add": 3
+		},
+		"loss":
+		{
+			"reg_term": 0.05,
+			"avg_steps": null
+		},
+		"recurrence_params":
+		{
+			"train_max_steps": 12,
+			"valid_max_steps": 12
+		},
+		"optimizer":
+		{
+			"lr": 1e-3,
+			"weight_decay": 0.1
+		},
+		"scheduler":
+		{
+			"T_0": 30,
+			"eta_min": 5e-5
+		}
+	}
+}
