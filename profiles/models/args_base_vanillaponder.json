@@ -45,7 +45,7 @@
 		{
 			"optimizer": "adamw",
 			"scheduler": "cosine",
-			"epochs": 30,
+			"epochs": 510,
 			"checkpoint_period": 30,
 			"grad_clipping": 10.0,
 			"random_seed": 0
