@@ -20,7 +20,7 @@ def main():
 
 	t_description = 'path to the test profile in JSON format. A test profile is composed of common dataset arguments, and lists of varying arguments for many test beds.'
 	parser.add_argument(
-		'-t', metavar='<test_profile>', type=str, nargs=1, required=True,
+		'-t', metavar='<test_profile>', type=str, nargs=1,
 		help = t_description
 	)
 

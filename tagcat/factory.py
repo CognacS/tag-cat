@@ -5,7 +5,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from tasks.math.addition.generators import DEC_ADDITION_ALPHA, BatchedSumSeqDataset, get_expected_vocab_size
+from tasks.math.addition.generators import DEC_ADDITION_ALPHA, BASE_ADDITION_VOCABS, BatchedSumSeqDataset, get_expected_vocab_size
+from tasks.utils.tokenizer import detokenizer_rich_chars2str, index_detokenize, vocab_reverse_map, index_tokenize, tokenizer_rich_str2chars
 
 from .modules.seq2grid import GridSizeHandler
 from .modules.pondernet import PonderNetModule
@@ -15,7 +16,7 @@ from .functions.losses import get_class_weightings_pad, SampleWeightedLoss, Halt
 from .checkpoints import CheckpointHandler
 
 from .train import train_net
-from .evaluation import test_net
+from .evaluation import test_net, compute_result
 
 import json
 from copy import deepcopy
@@ -312,6 +313,48 @@ def profile_test(model_profile, test_profile, models_path=None, verbose=False, s
 		perf_per_dataset[dataset_name] = perf
 
 	return model_name, perf_per_dataset
+
+def oneop_test(model_profile, operation, num_lists, list_size, max_steps, models_path=None):
+	# extract model arguments
+	model_args = model_profile['model']
+	train_args = model_profile['training']
+	max_steps = train_args['recurrence_params']['valid_max_steps']
+
+	# extract sub-arguments
+	model_name = model_args['model_name']
+
+	# build directory
+	if models_path is None:
+		models_path = ''
+
+	model_path = Path(f'{models_path}/{model_name}/')
+	if not model_path.exists():
+		return
+
+	# get device
+	device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
+	# extract expected vocabulary size
+	vocab_size = get_expected_vocab_size(10)
+
+	# setup model
+	net, use_pondernet = build_model(model_args, vocab_size, device=device)
+
+	# setup checkpoint handler and load model
+	checkpoint_handler = CheckpointHandler(
+		base_filename=model_name, path=str(model_path)+'/',
+		network=net, device=device
+	)
+	checkpoint_handler.load_structures()
+
+	vocab = BASE_ADDITION_VOCABS[10]
+	tokens = index_tokenize(operation, vocab, tokenizer_rich_str2chars)
+
+	result, n_updates = compute_result(net, tokens, num_lists, list_size, max_steps, device=device)
+
+	result = index_detokenize(result, vocab_reverse_map(vocab), detokenizer_rich_chars2str)
+
+	return result, n_updates
 
 
 def batch_train(model_profiles, dataset_profiles, output_path=None, verbose=False, silence=False, train_verbose=False):

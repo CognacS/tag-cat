@@ -65,3 +65,13 @@ def test_net(net, max_steps, test_dataset, grid_size_handler, device=None, verbo
 		print(f'Test char/seq accuracy: {test_accuracy_char_level}/{test_accuracy_seq_level}')
 
 	return {'char': test_accuracy_char_level, 'seq': test_accuracy_seq_level}
+
+
+def compute_result(net, tokens, num_lists, list_size, max_steps, device):
+	net.eval()
+	with torch.no_grad():
+		tokens = torch.tensor(tokens, device=device).unsqueeze(0)
+		pred, n_updates = net(tokens, num_lists, list_size, max_steps)
+		result = torch.argmax(pred, dim=2).squeeze(0).cpu().numpy()
+
+	return result, n_updates.cpu().item()
