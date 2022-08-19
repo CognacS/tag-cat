@@ -3,11 +3,11 @@ import pickle
 
 
 def craft_filename(pondernet, highway, reset, norm_pos):
-  rec = 'ponder' if pondernet else 'fixrec' # pondernet or fixed
-  hway = 'hiway' if highway else 'resid'  # highway or residual
-  rset = 'reset' if reset else 'norst'    # reset or pass through
-  norm = norm_pos + 'norm' # post/pre/none
-  return '_'.join([rec, hway, rset, norm])
+	rec = 'ponder' if pondernet else 'fixrec' # pondernet or fixed
+	hway = 'hiway' if highway else 'resid'  # highway or residual
+	rset = 'reset' if reset else 'norst'    # reset or pass through
+	norm = norm_pos + 'norm' # post/pre/none
+	return '_'.join([rec, hway, rset, norm])
 
 
 def save_network(filename, net):
